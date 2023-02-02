@@ -6,7 +6,7 @@ const Chat = () => {
 
   const send = () => {
     const sendObject: { id: number; message: string } = {
-      id: 1,
+      id: 2,
       message: message,
     };
     const newSendList: any = [...sendList, sendObject];
@@ -27,33 +27,40 @@ const Chat = () => {
 
   return (
     <>
-      <div className="px-2 py-2 bg-slate-300">
-        <div className="float-left text-3xl">▷</div>
-        <div className="text-3xl flex justify-center">グループ名</div>
+      <div className="fixed top-0 w-full mx-auto bg-slate-300">
+        <h1 className="right-0 text-3xl float-left">▷</h1>
+        <h1 className="text-3xl flex justify-center">グループ名</h1>
       </div>
-      <div>
+      <div className="my-10 overflow-y-scroll h-auto">
         {sendList.map(
           (sendthing: { id: number; message: string }, index: number) => {
             if (sendthing.id == 1) {
               return (
-                <div>
-                  <p className="flex justify-end">{sendthing.message}</p>
+                <div className="overflow-hidden">
+                  <div className="float-right mt-0">
+                    <div className="rounded-t-md border-2 px-2 py-0 mt-1 text-base bg-gray-300">
+                      {sendthing.message}
+                    </div>
+                  </div>
                 </div>
               );
             }
             if (sendthing.id == 2) {
               return (
-                <div>
-                  <p>{sendthing.id}</p>
-                  <p className="flex justify-start">{sendthing.message}</p>
+                <div className="overflow-hidden">
+                  <div className="float-left">
+                    <div className="float-left">{sendthing.id}</div>
+                    <div className="rounded-t-md border-2 ml-4 px-2 py-0 mt-1 text-base">
+                      {sendthing.message}
+                    </div>
+                  </div>
                 </div>
               );
             }
           }
         )}
       </div>
-      <></>
-      <div className="relative w-full px-2 mx-auto mt-10">
+      <div className="fixed bottom-0 w-full px-0 mx-auto mt-10 bg-slate-300">
         <input
           type="search"
           value={message}
@@ -67,7 +74,7 @@ const Chat = () => {
         <button
           type="submit"
           onClick={send}
-          className="absolute right-2.5 bottom-0 bg-slate-300 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+          className="absolute right-0 bottom-0 bg-slate-300 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
         >
           送信
         </button>
