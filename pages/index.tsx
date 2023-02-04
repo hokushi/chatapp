@@ -46,13 +46,13 @@ const Chat = () => {
   if (sendList) {
     return (
       <>
-        <div className="fixed top-0 w-full mx-auto bg-slate-300">
-          <h1 className="right-0 text-3xl float-left">▷</h1>
-          <h1 className="text-3xl flex justify-center">
+        <div className="fixed top-0 w-full py-1 mx-auto bg-slate-300 grid grid-cols-7">
+          <h1 className="text-3xl col-start-1 col-end-2">▷</h1>
+          <h1 className="text-3xl flex justify-center col-start-3 col-end-6">
             {sendList[0].sendername}
           </h1>
         </div>
-        <div className="my-10 overflow-y-scroll h-auto">
+        <div className="my-12 overflow-y-scroll h-auto">
           {sendList.map(
             (
               sendthing: {
