@@ -3,13 +3,13 @@ import axios from "axios";
 
 const Chat = () => {
   const [message, setMessage] = useState("");
-  const [sendList, setSendList] = useState([{ id: 2, message: "hoge" }]);
-  const [getUser, setGetUser] = useState(undefined);
-  const UserURL = "http://localhost:8000/chatapp/get_user/1";
+  const [sendList, setSendList] = useState(undefined);
+  const [getMessage, setGetMessage] = useState(undefined);
+  const MessageURL = "http://localhost:8000/chatapp/get_message";
 
   const send = () => {
     const sendObject: { id: number; message: string } = {
-      id: 2,
+      id: 3,
       message: message,
     };
     const newSendList: any = [...sendList, sendObject];
@@ -19,17 +19,17 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("send")) {
+    /*if (!localStorage.getItem("send")) {
       return;
     }
     const existingmessage = JSON.parse(localStorage.getItem("send"));
     if (existingmessage) {
       setSendList(existingmessage);
-    }
+    }*/
     axios
-      .get(UserURL)
+      .get(MessageURL)
       .then((res) => {
-        setGetUser(res.data);
+        setSendList(res.data);
         console.log(res.data);
       })
       .catch((err) => {
@@ -37,17 +37,26 @@ const Chat = () => {
       });
   }, []);
 
-  if (getUser) {
+  if (sendList) {
     return (
       <>
         <div className="fixed top-0 w-full mx-auto bg-slate-300">
           <h1 className="right-0 text-3xl float-left">▷</h1>
-          <h1 className="text-3xl flex justify-center">{getUser.name}</h1>
+          <h1 className="text-3xl flex justify-center">
+            {sendList[0].sendername}
+          </h1>
         </div>
         <div className="my-10 overflow-y-scroll h-auto">
           {sendList.map(
-            (sendthing: { id: number; message: string }, index: number) => {
-              if (sendthing.id == 2) {
+            (
+              sendthing: {
+                sendername_id: number;
+                message: string;
+                sendername: string;
+              },
+              index: number
+            ) => {
+              if (sendthing.sendername_id == 3) {
                 return (
                   <div className="overflow-hidden">
                     <div className="float-right mt-0">
@@ -58,11 +67,13 @@ const Chat = () => {
                   </div>
                 );
               }
-              if (getUser.id == 1) {
+              if (sendthing.sendername_id == 1) {
                 return (
                   <div className="overflow-hidden">
                     <div className="float-left">
-                      <div className="float-left">{getUser.id}</div>
+                      <div className="float-left">
+                        {sendthing.sendername_id}
+                      </div>
                       <div className="rounded-t-md border-2 ml-4 px-2 py-0 mt-1 text-base">
                         {sendthing.message}
                       </div>
