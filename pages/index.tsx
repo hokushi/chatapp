@@ -4,18 +4,23 @@ import axios from "axios";
 const Chat = () => {
   const [message, setMessage] = useState("");
   const [sendList, setSendList] = useState(undefined);
+  //これはuseeffectの第二引数に渡す用
+  const [renderAfterSend, setRenderAfterSend] = useState(false);
   const [getMessage, setGetMessage] = useState(undefined);
   const MessageURL = "http://localhost:8000/chatapp/get_message";
+  const SendURL = "http://localhost:8000/chatapp/create_message";
 
   const send = () => {
-    const sendObject: { id: number; message: string } = {
-      id: 3,
-      message: message,
-    };
-    const newSendList: any = [...sendList, sendObject];
-    setSendList(newSendList);
-    localStorage.setItem("send", JSON.stringify(newSendList));
-    setMessage("");
+    const sendinformation = { chatappUser_id: 3, message: message };
+    axios
+      .post(SendURL, sendinformation)
+      .then((res) => {
+        console.log(res);
+        setRenderAfterSend(!renderAfterSend);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -31,11 +36,12 @@ const Chat = () => {
       .then((res) => {
         setSendList(res.data);
         console.log(res.data);
+        setMessage("");
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [renderAfterSend]);
 
   if (sendList) {
     return (
