@@ -11,16 +11,20 @@ const Chat = () => {
   const SendURL = "http://localhost:8000/chatapp/create_message";
 
   const send = () => {
-    const sendinformation = { chatappUser_id: 3, message: message };
-    axios
-      .post(SendURL, sendinformation)
-      .then((res) => {
-        console.log(res);
-        setRenderAfterSend(!renderAfterSend);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!message) {
+      return;
+    } else {
+      const sendinformation = { chatappUser_id: 3, message: message };
+      axios
+        .post(SendURL, sendinformation)
+        .then((res) => {
+          console.log(res);
+          setRenderAfterSend(!renderAfterSend);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -92,7 +96,7 @@ const Chat = () => {
         </div>
         <div className="fixed bottom-0 w-full px-0 mx-auto mt-10 bg-slate-300">
           <input
-            type="search"
+            type="text"
             value={message}
             onChange={(e) => {
               setMessage(e.target.value);
