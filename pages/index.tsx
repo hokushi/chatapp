@@ -63,16 +63,18 @@ const Chat = () => {
                 sendername_id: number;
                 message: string;
                 sendername: string;
+                created_at: number[];
               },
               index: number
             ) => {
               if (sendthing.sendername_id == 3) {
                 return (
                   <div className="overflow-hidden">
-                    <div className="float-right mt-0">
-                      <div className="rounded-t-md border-2 px-2 py-0 mt-1 text-base bg-gray-300">
-                        {sendthing.message}
-                      </div>
+                    <div className="rounded-t-md border-2 px-2 py-0 mt-1 text-base bg-gray-300 float-right">
+                      {sendthing.message}
+                    </div>
+                    <div className="float-right mt-5 text-gray-400 text-xs">
+                      {sendthing.created_at[0]}:{sendthing.created_at[1]}
                     </div>
                   </div>
                 );
@@ -80,13 +82,12 @@ const Chat = () => {
               if (sendthing.sendername_id == 1) {
                 return (
                   <div className="overflow-hidden">
-                    <div className="float-left">
-                      <div className="float-left">
-                        {sendthing.sendername_id}
-                      </div>
-                      <div className="rounded-t-md border-2 ml-4 px-2 py-0 mt-1 text-base">
-                        {sendthing.message}
-                      </div>
+                    <div className="float-left">{sendthing.sendername_id}</div>
+                    <div className="rounded-t-md border-2 ml-4 px-2 py-0 mt-1 text-base float-left">
+                      {sendthing.message}
+                    </div>
+                    <div className="float-left mt-5 text-gray-400 text-xs">
+                      {sendthing.created_at[0]}:{sendthing.created_at[1]}
                     </div>
                   </div>
                 );
