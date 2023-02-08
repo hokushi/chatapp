@@ -17,7 +17,7 @@ const MessageComponent = ({ sendthing, isMine }) => {
         {sendthing.message}
       </div>
       <div className={`${floatStyle} mt-5 text-gray-400 text-xs`}>
-        {sendthing.created_at[0]}:{sendthing.created_at[1]}
+        {sendthing.created_at[2]}:{sendthing.created_at[3]}
       </div>
     </div>
   );
@@ -26,6 +26,7 @@ const MessageComponent = ({ sendthing, isMine }) => {
 const Chat = () => {
   const [message, setMessage] = useState("");
   const [sendList, setSendList] = useState(undefined);
+  const [datecheck, setDatecheck] = useState({});
   //これはuseeffectの第二引数に渡す用
   const [renderAfterSend, setRenderAfterSend] = useState(false);
 
@@ -52,7 +53,9 @@ const Chat = () => {
       .then((res) => {
         setSendList(res.data);
         console.log(res.data);
+        setDatecheck(res.data[0].created_at[1])
         setMessage("");
+        
       })
       .catch((err) => {
         console.log(err);
@@ -80,12 +83,30 @@ const Chat = () => {
               index: number
             ) => {
               const isMine = sendthing.sendername_id == 3;
+              if(index==0){
+                return (
+                  <div key={index}>
+                    <div className="text-center">{sendthing.created_at[0]}月{sendthing.created_at[1]}日</div>
+                    <MessageComponent sendthing={sendthing} isMine={isMine} />
+                  </div>
+                );
+              }
+              if(sendList[index].created_at[1]==sendList[index-1].created_at[1]){
               return (
                 <div key={index}>
                   <MessageComponent sendthing={sendthing} isMine={isMine} />
                 </div>
               );
+              }else{
+                return(
+                  <div key={index}>
+                  <div className="text-center">{sendthing.created_at[0]}月{sendthing.created_at[1]}日</div>
+                  <MessageComponent sendthing={sendthing} isMine={isMine} />
+                </div>
+                )
+              }
             }
+
           )}
         </div>
         <div className="fixed bottom-0 w-full px-0 mx-auto mt-10 bg-slate-300">
