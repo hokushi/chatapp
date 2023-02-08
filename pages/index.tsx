@@ -3,10 +3,10 @@ import axios from "axios";
 
 const MESSAGE_URL = "http://localhost:8000/chatapp/message";
 
-const MessageComponent = ({ sendthing, index, isMine }) => {
+const MessageComponent = ({ sendthing, isMine }) => {
   const floatStyle = isMine ? "float-right" : "float-left";
   return (
-    <div className="overflow-hidden" key={index}>
+    <div className="overflow-hidden">
       {isMine || (
         <div className="float-left mr-2">{sendthing.sendername_id}</div>
       )}
@@ -80,11 +80,9 @@ const Chat = () => {
             ) => {
               const isMine = sendthing.sendername_id == 3;
               return (
-                <MessageComponent
-                  sendthing={sendthing}
-                  index={index}
-                  isMine={isMine}
-                />
+                <div key={index}>
+                  <MessageComponent sendthing={sendthing} isMine={isMine} />
+                </div>
               );
             }
           )}
