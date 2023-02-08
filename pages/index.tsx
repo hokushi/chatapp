@@ -5,13 +5,14 @@ const MESSAGE_URL = "http://localhost:8000/chatapp/message";
 
 const MessageComponent = ({ sendthing, isMine }) => {
   const floatStyle = isMine ? "float-right" : "float-left";
+  const colorStyle = isMine ? "bg-gray-300" : "bg-white";
   return (
     <div className="overflow-hidden">
       {isMine || (
         <div className="float-left mr-2">{sendthing.sendername_id}</div>
       )}
       <div
-        className={`rounded-t-md border-2 px-2 py-0 mt-1 text-base bg-gray-300 ${floatStyle}`}
+        className={`rounded-t-md border-2 px-2 py-0 mt-1 text-base bg-gray-300 ${colorStyle} ${floatStyle}`}
       >
         {sendthing.message}
       </div>
