@@ -6,6 +6,7 @@ const MESSAGE_URL = "http://localhost:8000/chatapp/message";
 const MessageComponent = ({ sendthing, isMine }) => {
   const floatStyle = isMine ? "float-right" : "float-left";
   const colorStyle = isMine ? "bg-gray-300" : "bg-white";
+  const messageID = sendthing.message.id;
   return (
     <div className="overflow-hidden">
       {isMine || (
@@ -14,7 +15,7 @@ const MessageComponent = ({ sendthing, isMine }) => {
       <div
         className={`rounded-t-md border-2 px-2 py-0 mt-1 text-base bg-gray-300 ${colorStyle} ${floatStyle}`}
       >
-        {sendthing.message}
+        {sendthing.message.text}
       </div>
       <div className={`${floatStyle} mt-5 text-gray-400 text-xs`}>
         {sendthing.created_at[2]}:{sendthing.created_at[3]}
@@ -26,7 +27,6 @@ const MessageComponent = ({ sendthing, isMine }) => {
 const Chat = () => {
   const [message, setMessage] = useState("");
   const [sendList, setSendList] = useState(undefined);
-  const [datecheck, setDatecheck] = useState({});
   //これはuseeffectの第二引数に渡す用
   const [renderAfterSend, setRenderAfterSend] = useState(false);
 
@@ -34,11 +34,16 @@ const Chat = () => {
     if (!message) {
       return;
     } else {
-      const sendInformation = { chatappUser_id: 3, message: message };
+      //chatappUser_idを3にしているが特定したくないので後で変更する
+      //localStorageはstring型のみ
+      localStorage.setItem("chatappUser_id", "3");
+      const sendInformation = {
+        chatappUser_id: parseInt(localStorage.getItem("chatappUser_id")),
+        message: message,
+      };
       axios
         .post(MESSAGE_URL, sendInformation)
         .then((res) => {
-          console.log(res);
           setRenderAfterSend(!renderAfterSend);
         })
         .catch((err) => {
@@ -53,9 +58,7 @@ const Chat = () => {
       .then((res) => {
         setSendList(res.data);
         console.log(res.data);
-        setDatecheck(res.data[0].created_at[1])
         setMessage("");
-        
       })
       .catch((err) => {
         console.log(err);
@@ -68,7 +71,7 @@ const Chat = () => {
         <div className="fixed top-0 w-full py-1 mx-auto bg-slate-300 grid grid-cols-7">
           <h1 className="text-3xl col-start-1 col-end-2">▷</h1>
           <h1 className="text-3xl flex justify-center col-start-3 col-end-6">
-            {sendList[0].sendername}
+            {sendList[1].sendername}
           </h1>
         </div>
         <div className="my-12 overflow-y-scroll h-auto">
@@ -76,41 +79,47 @@ const Chat = () => {
             (
               sendthing: {
                 sendername_id: number;
-                message: string;
+                message: { id: number; text: string };
                 sendername: string;
                 created_at: number[];
               },
               index: number
             ) => {
               const isMine = sendthing.sendername_id == 3;
-              if(index==0){
+              if (index == 0) {
                 return (
                   <div key={index}>
-                    <div className="text-center">{sendthing.created_at[0]}月{sendthing.created_at[1]}日</div>
+                    <div className="text-center">
+                      {sendthing.created_at[0]}月{sendthing.created_at[1]}日
+                    </div>
                     <MessageComponent sendthing={sendthing} isMine={isMine} />
                   </div>
                 );
               }
-              if(sendList[index].created_at[1]==sendList[index-1].created_at[1]){
-              return (
-                <div key={index}>
-                  <MessageComponent sendthing={sendthing} isMine={isMine} />
-                </div>
-              );
-              }else{
-                return(
+              if (
+                sendList[index].created_at[1] ==
+                sendList[index - 1].created_at[1]
+              ) {
+                return (
                   <div key={index}>
-                  <div className="text-center">{sendthing.created_at[0]}月{sendthing.created_at[1]}日</div>
-                  <MessageComponent sendthing={sendthing} isMine={isMine} />
-                </div>
-                )
+                    <MessageComponent sendthing={sendthing} isMine={isMine} />
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={index}>
+                    <div className="text-center">
+                      {sendthing.created_at[0]}月{sendthing.created_at[1]}日
+                    </div>
+                    <MessageComponent sendthing={sendthing} isMine={isMine} />
+                  </div>
+                );
               }
             }
-
           )}
         </div>
         <div className="fixed bottom-0 w-full px-0 mx-auto mt-10 bg-slate-300">
-          <form>
+          <form onSubmit={sendMessage}>
             <input
               type="text"
               value={message}
@@ -123,7 +132,6 @@ const Chat = () => {
             />
             <button
               type="submit"
-              onClick={sendMessage}
               className="absolute right-0 bottom-0 bg-slate-300 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
             >
               送信
