@@ -1,10 +1,20 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import axios from "axios";
 
-export default function Example() {
+const MESSAGE_URL = "http://localhost:8000/chatapp/message";
+
+export default function Check({ messageID }: { messageID: number }) {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
+
+  const deleteMessage = (messageID) => {
+    const DELETE_URL = `http://localhost:8000/chatapp/message/${messageID}`;
+    axios.delete(DELETE_URL).then((res) => {
+      console.log("正常に削除しました");
+    });
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -52,7 +62,10 @@ export default function Example() {
                   <button
                     type="button"
                     className=" mt-3 inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 "
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false);
+                      deleteMessage(messageID);
+                    }}
                   >
                     はい
                   </button>

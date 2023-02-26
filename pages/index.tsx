@@ -26,7 +26,7 @@ const MessageComponent = ({ sendthing, isMine }) => {
         {sendthing.created_at[2]}:{sendthing.created_at[3]}
       </div>
 
-      {isMine && deleteCheck && <Check />}
+      {isMine && deleteCheck && <Check messageID={messageID} />}
     </div>
   );
 };
