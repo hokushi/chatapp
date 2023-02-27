@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
+import Check from "../components/check";
 import axios from "axios";
 
 const MESSAGE_URL = "http://localhost:8000/chatapp/message";
 
-const MessageComponent = ({ sendthing, isMine }) => {
+const MessageComponent = ({ sendthing, isMine, setterfunc }) => {
   const floatStyle = isMine ? "float-right" : "float-left";
   const colorStyle = isMine ? "bg-gray-300" : "bg-white";
+  const [deleteCheck, setDeleteCheck] = useState(false);
+
   const messageID = sendthing.message.id;
+
   return (
     <div className="overflow-hidden">
       {isMine || (
@@ -14,12 +18,17 @@ const MessageComponent = ({ sendthing, isMine }) => {
       )}
       <div
         className={`rounded-t-md border-2 px-2 py-0 mt-1 text-base bg-gray-300 ${colorStyle} ${floatStyle}`}
+        onClick={() => setDeleteCheck(!deleteCheck)}
       >
         {sendthing.message.text}
       </div>
       <div className={`${floatStyle} mt-5 text-gray-400 text-xs`}>
         {sendthing.created_at[2]}:{sendthing.created_at[3]}
       </div>
+
+      {isMine && deleteCheck && (
+        <Check messageID={messageID} setterfunc={setterfunc} />
+      )}
     </div>
   );
 };
@@ -92,7 +101,13 @@ const Chat = () => {
                     <div className="text-center">
                       {sendthing.created_at[0]}月{sendthing.created_at[1]}日
                     </div>
-                    <MessageComponent sendthing={sendthing} isMine={isMine} />
+                    <MessageComponent
+                      sendthing={sendthing}
+                      isMine={isMine}
+                      setterfunc={() => {
+                        setRenderAfterSend(!renderAfterSend);
+                      }}
+                    />
                   </div>
                 );
               }
@@ -102,7 +117,13 @@ const Chat = () => {
               ) {
                 return (
                   <div key={index}>
-                    <MessageComponent sendthing={sendthing} isMine={isMine} />
+                    <MessageComponent
+                      sendthing={sendthing}
+                      isMine={isMine}
+                      setterfunc={() => {
+                        setRenderAfterSend(!renderAfterSend);
+                      }}
+                    />
                   </div>
                 );
               } else {
@@ -111,7 +132,13 @@ const Chat = () => {
                     <div className="text-center">
                       {sendthing.created_at[0]}月{sendthing.created_at[1]}日
                     </div>
-                    <MessageComponent sendthing={sendthing} isMine={isMine} />
+                    <MessageComponent
+                      sendthing={sendthing}
+                      isMine={isMine}
+                      setterfunc={() => {
+                        setRenderAfterSend(!renderAfterSend);
+                      }}
+                    />
                   </div>
                 );
               }
