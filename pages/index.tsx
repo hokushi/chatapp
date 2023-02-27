@@ -4,7 +4,7 @@ import axios from "axios";
 
 const MESSAGE_URL = "http://localhost:8000/chatapp/message";
 
-const MessageComponent = ({ sendthing, isMine }) => {
+const MessageComponent = ({ sendthing, isMine, setterfunc }) => {
   const floatStyle = isMine ? "float-right" : "float-left";
   const colorStyle = isMine ? "bg-gray-300" : "bg-white";
   const [deleteCheck, setDeleteCheck] = useState(false);
@@ -26,7 +26,9 @@ const MessageComponent = ({ sendthing, isMine }) => {
         {sendthing.created_at[2]}:{sendthing.created_at[3]}
       </div>
 
-      {isMine && deleteCheck && <Check messageID={messageID} />}
+      {isMine && deleteCheck && (
+        <Check messageID={messageID} setterfunc={setterfunc} />
+      )}
     </div>
   );
 };
@@ -99,7 +101,13 @@ const Chat = () => {
                     <div className="text-center">
                       {sendthing.created_at[0]}月{sendthing.created_at[1]}日
                     </div>
-                    <MessageComponent sendthing={sendthing} isMine={isMine} />
+                    <MessageComponent
+                      sendthing={sendthing}
+                      isMine={isMine}
+                      setterfunc={() => {
+                        setRenderAfterSend(!renderAfterSend);
+                      }}
+                    />
                   </div>
                 );
               }
@@ -109,7 +117,13 @@ const Chat = () => {
               ) {
                 return (
                   <div key={index}>
-                    <MessageComponent sendthing={sendthing} isMine={isMine} />
+                    <MessageComponent
+                      sendthing={sendthing}
+                      isMine={isMine}
+                      setterfunc={() => {
+                        setRenderAfterSend(!renderAfterSend);
+                      }}
+                    />
                   </div>
                 );
               } else {
@@ -118,7 +132,13 @@ const Chat = () => {
                     <div className="text-center">
                       {sendthing.created_at[0]}月{sendthing.created_at[1]}日
                     </div>
-                    <MessageComponent sendthing={sendthing} isMine={isMine} />
+                    <MessageComponent
+                      sendthing={sendthing}
+                      isMine={isMine}
+                      setterfunc={() => {
+                        setRenderAfterSend(!renderAfterSend);
+                      }}
+                    />
                   </div>
                 );
               }

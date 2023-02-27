@@ -4,7 +4,13 @@ import axios from "axios";
 
 const MESSAGE_URL = "http://localhost:8000/chatapp/message";
 
-export default function Check({ messageID }: { messageID: number }) {
+export default function Check({
+  messageID,
+  setterfunc,
+}: {
+  messageID: number;
+  setterfunc: any;
+}) {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
@@ -13,6 +19,7 @@ export default function Check({ messageID }: { messageID: number }) {
     const DELETE_URL = `http://localhost:8000/chatapp/message/${messageID}`;
     axios.delete(DELETE_URL).then((res) => {
       console.log("正常に削除しました");
+      setterfunc();
     });
   };
 
