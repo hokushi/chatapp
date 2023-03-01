@@ -7,9 +7,11 @@ const MESSAGE_URL = "http://localhost:8000/chatapp/message";
 export default function Check({
   messageID,
   setterfunc,
+  setDeleteCheck,
 }: {
   messageID: number;
   setterfunc: any;
+  setDeleteCheck: any;
 }) {
   const [open, setOpen] = useState(true);
 
@@ -20,6 +22,7 @@ export default function Check({
     axios.delete(DELETE_URL).then((res) => {
       console.log("正常に削除しました");
       setterfunc();
+      setDeleteCheck(false);
     });
   };
 
@@ -79,7 +82,10 @@ export default function Check({
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false);
+                      setDeleteCheck(false);
+                    }}
                     ref={cancelButtonRef}
                   >
                     いいえ

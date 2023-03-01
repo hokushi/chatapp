@@ -27,7 +27,11 @@ const MessageComponent = ({ sendthing, isMine, setterfunc }) => {
       </div>
 
       {isMine && deleteCheck && (
-        <Check messageID={messageID} setterfunc={setterfunc} />
+        <Check
+          messageID={messageID}
+          setterfunc={setterfunc}
+          setDeleteCheck={setDeleteCheck}
+        />
       )}
     </div>
   );
