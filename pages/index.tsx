@@ -83,6 +83,7 @@ const Chat = () => {
       <>
         <div className="fixed top-0 w-full py-1 mx-auto bg-slate-300 grid grid-cols-7">
           <h1 className="text-3xl col-start-1 col-end-2">▷</h1>
+          {/* ここの名前は固定する */}
           <h1 className="text-3xl flex justify-center col-start-3 col-end-6">
             {sendList[1].sendername}
           </h1>
@@ -98,6 +99,9 @@ const Chat = () => {
               },
               index: number
             ) => {
+              {
+                /* 強制的に自分を３にしている */
+              }
               const isMine = sendthing.sendername_id == 3;
               if (index == 0) {
                 return (
