@@ -58,6 +58,7 @@ const Chat = () => {
         .post(MESSAGE_URL, sendInformation)
         .then((res) => {
           setRenderAfterSend(!renderAfterSend);
+          setMessage("");
         })
         .catch((err) => {
           console.log(err);
@@ -71,7 +72,6 @@ const Chat = () => {
       .then((res) => {
         setSendList(res.data);
         console.log(res.data);
-        setMessage("");
       })
       .catch((err) => {
         console.log(err);
