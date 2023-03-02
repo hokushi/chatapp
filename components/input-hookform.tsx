@@ -17,7 +17,6 @@ const InputHookform = ({
     <div className="mt-5">
       <div className="flex justify-between">
         <h1 className="text-gray-700 ml-8">{entries}</h1>
-        {errors && <p className="mr-8 text-red-500">{errors.message}</p>}
       </div>
       <input
         type="text"
@@ -25,6 +24,7 @@ const InputHookform = ({
         placeholder={placeholder}
         {...register(name, RegisterOptions)}
       />
+      {errors && <p className="ml-8 text-red-500">{errors.message}</p>}
     </div>
   );
 };
