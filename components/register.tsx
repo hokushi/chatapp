@@ -26,14 +26,15 @@ const Register = () => {
   };
 
   const sendProfile: SubmitHandler<InputType> = (data) => {
-    const id = uuid();
-    localStorage.setItem("todo", JSON.stringify(id));
     const sendProfile = { name: data.username };
     axios
       .post(USERS_URL, sendProfile)
       .then((res) => {
-        console.log(res.data);
-        router.push(`/select-chatroom/${id}`);
+        axios.get(USERS_URL).then((res) => {
+          console.log(res.data);
+          const id = res.data[res.data.length - 1].id;
+          router.push(`/select-chatroom/${id}`);
+        });
       })
       .catch((err) => {
         console.log(err);
