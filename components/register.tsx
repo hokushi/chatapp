@@ -1,8 +1,14 @@
 import React from "react";
+import axios from "axios";
+import { v4 as uuid } from "uuid";
+import { useRouter } from "next/router";
 import InputHookform from "../components/input-hookform";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const Register = () => {
+  const USERS_URL = "http://localhost:8000/chatapp/user";
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -13,15 +19,30 @@ const Register = () => {
 
   type InputType = {
     username: string;
+    uuid: string;
     age: number;
     mail: string;
     callnumber: number;
   };
 
   const sendProfile: SubmitHandler<InputType> = (data) => {
-    console.log(data.username);
-    console.log(data.age);
-    console.log(data);
+    const sendProfile = { name: data.username };
+    axios
+      .post(USERS_URL, sendProfile)
+      .then((res) => {
+        axios.get(USERS_URL).then((res) => {
+          console.log(res.data);
+          const id = res.data[res.data.length - 1].id;
+          router.push(`/select-chatroom/${id}`);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const check = () => {
+    console.log(router);
   };
 
   return (
@@ -44,7 +65,7 @@ const Register = () => {
                 required: "※名前は必須です。",
               }}
             />
-            <InputHookform
+            {/*<InputHookform
               entries="年齢"
               placeholder="20"
               register={register}
@@ -85,7 +106,7 @@ const Register = () => {
                   message: "正しい電話番号ではありません。",
                 },
               }}
-            />
+            />*/}
             <div className="grid grid-cols-11">
               <button
                 type="submit"
@@ -96,6 +117,7 @@ const Register = () => {
             </div>
           </form>
         </div>
+        <button onClick={check}>aa</button>
       </div>
     </>
   );

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Check from "../../components/check";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { json } from "stream/consumers";
 
 const MESSAGE_URL = "http://localhost:8000/chatapp/message";
 
@@ -43,7 +44,7 @@ const Chat = () => {
   const [sendList, setSendList] = useState(undefined);
   //これはuseeffectの第二引数に渡す用
   const [renderAfterSend, setRenderAfterSend] = useState(false);
-  const userid = Number(useRouter().query.id);
+  const router = useRouter();
 
   const sendMessage = () => {
     if (!message) {
@@ -74,6 +75,8 @@ const Chat = () => {
       .then((res) => {
         setSendList(res.data);
         console.log(res.data);
+        console.log(router);
+        console.log(JSON.parse(localStorage.getItem("myID")));
       })
       .catch((err) => {
         console.log(err);
@@ -86,7 +89,7 @@ const Chat = () => {
         <div className="fixed top-0 w-full py-1 mx-auto bg-slate-300 grid grid-cols-7">
           <h1 className="text-3xl col-start-1 col-end-2">▷</h1>
           <h1 className="text-3xl flex justify-center col-start-3 col-end-6">
-            {sendList[userid].sendername}
+            {router.query.name}
           </h1>
         </div>
         <div className="my-12 overflow-y-scroll h-auto">
@@ -100,10 +103,9 @@ const Chat = () => {
               },
               index: number
             ) => {
-              {
-                /* 強制的に自分を３にしている */
-              }
-              const isMine = sendthing.sendername_id == 3;
+              const isMine =
+                sendthing.sendername_id ==
+                Number(JSON.parse(localStorage.getItem("myID")));
               if (index == 0) {
                 return (
                   <div key={index}>
