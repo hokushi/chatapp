@@ -15,7 +15,6 @@ const ReactCheck = () => {
   /* useEffectの基本 */
   useEffect(() => {
     console.log("useEffectが実行されました");
-    setNumber(1);
   }, []);
   /* axiosを使ってみよう */
   const axiosCheck = () => {
@@ -69,7 +68,7 @@ const ReactCheck = () => {
         <Link href="/register">ページ遷移</Link>
       </div>
       <div className="mt-5">
-        <Link href="/pass">passページ遷移</Link>
+        <Link href="/hogehoge">passページ遷移</Link>
       </div>
       <div className="mt-5">
         <Link href={{ pathname: "/query", query: { id: 1 } }}>
