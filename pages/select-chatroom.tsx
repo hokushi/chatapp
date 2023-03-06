@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Check from "../components/check";
 import axios from "axios";
+import Link from "next/link";
 
 const USERS_URL = "http://localhost:8000/chatapp/get_users";
 
@@ -30,9 +31,12 @@ const SelectChatroom = () => {
                 <div className="col-start-1 col-end-2 text-5xl bg-slate-400">
                   {user.id}
                 </div>
-                <div className="col-start-2 col-end-11 text-base">
+                <Link
+                  className="col-start-2 col-end-11 text-base"
+                  href={`/chatroom/${user.id}`}
+                >
                   {user.name}
-                </div>
+                </Link>
               </div>
             </div>
           );

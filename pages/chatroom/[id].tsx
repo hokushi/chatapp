@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Check from "../components/check";
+import Check from "../../components/check";
+import { useRouter } from "next/router";
 import axios from "axios";
 
 const MESSAGE_URL = "http://localhost:8000/chatapp/message";
@@ -42,6 +43,7 @@ const Chat = () => {
   const [sendList, setSendList] = useState(undefined);
   //これはuseeffectの第二引数に渡す用
   const [renderAfterSend, setRenderAfterSend] = useState(false);
+  const userid = Number(useRouter().query.id);
 
   const sendMessage = () => {
     if (!message) {
@@ -83,9 +85,8 @@ const Chat = () => {
       <>
         <div className="fixed top-0 w-full py-1 mx-auto bg-slate-300 grid grid-cols-7">
           <h1 className="text-3xl col-start-1 col-end-2">▷</h1>
-          {/* ここの名前は固定する */}
           <h1 className="text-3xl flex justify-center col-start-3 col-end-6">
-            {sendList[1].sendername}
+            {sendList[userid].sendername}
           </h1>
         </div>
         <div className="my-12 overflow-y-scroll h-auto">
