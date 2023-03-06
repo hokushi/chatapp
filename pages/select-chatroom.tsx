@@ -22,10 +22,18 @@ const SelectChatroom = () => {
   if (users) {
     return (
       <>
+        <div className="text-5xl bg-slate-200">トーク</div>
         {users.map((user: { name: string; id: number }, index: number) => {
           return (
-            <div key={user.id}>
-              <div>{user.name}</div>
+            <div>
+              <div className="w-full grid grid-cols-10 my-1" key={user.id}>
+                <div className="col-start-1 col-end-2 text-5xl bg-slate-400">
+                  {user.id}
+                </div>
+                <div className="col-start-2 col-end-11 text-base">
+                  {user.name}
+                </div>
+              </div>
             </div>
           );
         })}
