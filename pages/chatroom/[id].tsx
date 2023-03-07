@@ -87,7 +87,12 @@ const Chat = () => {
     return (
       <>
         <div className="fixed top-0 w-full py-1 mx-auto bg-slate-300 grid grid-cols-7">
-          <h1 className="text-3xl col-start-1 col-end-2">▷</h1>
+          <button
+            className="text-3xl col-start-1 col-end-2"
+            onClick={() => router.back()}
+          >
+            ▷
+          </button>
           <h1 className="text-3xl flex justify-center col-start-3 col-end-6">
             {router.query.name}
           </h1>
