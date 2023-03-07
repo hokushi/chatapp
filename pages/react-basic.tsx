@@ -7,74 +7,39 @@ const Component = () => {
 };
 
 const ReactCheck = () => {
-  /* usestateの基本 */
-  const [number, setNumber] = useState(1);
-  const [boolean, setBoolean] = useState(true);
-  /* mapの使い方 */
-  const maplists = ["a", "b", "c"];
-  /* useEffectの基本 */
-  useEffect(() => {
-    console.log("useEffectが実行されました");
-  }, []);
-  /* axiosを使ってみよう */
-  const axiosCheck = () => {
-    const URL = "https://jsonplaceholder.typicode.com/todos";
-    axios
-      .get(URL)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <>
       {/* useStateの基本 */}
       <div>
-        <h1>useStateの基本</h1>
-        <p>number: {number}</p>
-        <p>boolean: {boolean ? "true" : "false"}</p>
-        <button
-          className="bg-red-400 mr-2"
-          onClick={() => setNumber(number + 1)}
-        >
-          number + 1
-        </button>
-        <button className="bg-red-400" onClick={() => setBoolean(!boolean)}>
-          booleanを反転
-        </button>
-        {/* mapの使い方 */}
-        <div className="mt-5">
-          <h1>mapの使い方</h1>
-          {maplists.map((list, index) => {
-            return (
-              <div key={index}>
-                <p>{list}</p>
-              </div>
-            );
-          })}
+        <div>
+          <span className="text-red-500 text-xl ">step1</span> <br />
+          <Link href="react-basic/basic1" className="text-3xl">
+            useStateとuseEffectについて
+          </Link>
+        </div>
+        <div>
+          <span className="text-red-500 text-xl ">step2</span> <br />
+          <Link href="react-basic/basic2" className="text-3xl">
+            axiosについて
+          </Link>
+        </div>
+        <div>
+          <span className="text-red-500 text-xl ">step3</span> <br />
+          <Link href="react-basic/basic3" className="text-3xl">
+            Linkタグについて
+            <br />
+            クエリとパスも学ぶよ
+          </Link>
+        </div>
+        <div>
+          <span className="text-red-500 text-xl ">step4</span> <br />
+          <Link href="react-basic/basic4" className="text-3xl">
+            mapの使い方
+          </Link>
         </div>
       </div>
       {/* コンポーネントの基本 */}
       <Component />
-      {/* axiosの基本 */}
-      <button className="mt-5" onClick={axiosCheck}>
-        axios通信
-      </button>
-      {/* Linkタグについて */}
-      <div className="mt-5">
-        <Link href="/register">ページ遷移</Link>
-      </div>
-      <div className="mt-5">
-        <Link href="/hogehoge">passページ遷移</Link>
-      </div>
-      <div className="mt-5">
-        <Link href={{ pathname: "/query", query: { id: 1 } }}>
-          queryページ遷移
-        </Link>
-      </div>
     </>
   );
 };

@@ -4,33 +4,34 @@ import { useRouter } from "next/router";
 
 const Pass = () => {
   const URL = "https://jsonplaceholder.typicode.com/todos";
-  const tododata = useRouter();
+  const router = useRouter();
   const [todo, setTodo] = useState([]);
-  const todoid = Number(tododata.query.id);
+  const todoid = Number(router.query.id);
 
   const querycheck = () => {
-    console.log(tododata);
+    console.log(router);
+    console.log(router.query.id);
   };
 
   const querycheck2 = () => {
-    console.log(todo[todoid - 1]);
-  };
-
-  useEffect(() => {
     axios
       .get(URL)
       .then((res) => {
         console.log(res.data);
-        setTodo(res.data);
+        console.log(res.data[todoid - 1]);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
 
   return (
     <>
-      <button onClick={querycheck}>queryのcheck</button>
+      <h1>queryのcheckをしよう</h1>
+      <button className="bg-red-400" onClick={querycheck}>
+        queryのcheck
+      </button>
+      <h1>今までを使ってデータ表示</h1>
       <button className="bg-red-400" onClick={querycheck2}>
         queryのcheck2
       </button>
