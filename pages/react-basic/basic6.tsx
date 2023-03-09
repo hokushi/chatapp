@@ -38,21 +38,6 @@ const basic6 = () => {
           {errors.username && (
             <p className="ml-8 text-red-500">{errors.username.message}</p>
           )}
-          <h1 className="ml-8 mt-20 text-red-500 text-2xl">
-            コンポーネントで使う
-          </h1>
-          <InputHookform
-            entries="名前"
-            placeholder="ほくし"
-            //reigster関数をpropsで渡す
-            register={register}
-            name="username"
-            errors={errors.username}
-            RegisterOptions={{
-              maxLength: { value: 5, message: "※5文字以内でご記入ください" },
-              required: "※名前は必須です。",
-            }}
-          />
         </div>
         <div className="grid grid-cols-11">
           <button

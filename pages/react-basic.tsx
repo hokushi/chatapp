@@ -46,6 +46,12 @@ const ReactCheck = () => {
             react-fook-formの使い方
           </Link>
         </div>
+        <div className="mt-5">
+          <span className="text-red-500 text-xl">上級編②</span> <br />
+          <Link href="react-basic/basic7" className="text-3xl">
+            zodの使い方
+          </Link>
+        </div>
       </div>
     </>
   );
