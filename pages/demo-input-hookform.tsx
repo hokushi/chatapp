@@ -5,10 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 const DemoInputHookform = () => {
   const {
     register,
-    handleSubmit,
+    handleSubmit /* これでバリデーションをしている */,
     formState: { errors },
-    getValues,
-    setValue,
   } = useForm<InputType>();
 
   type InputType = {
