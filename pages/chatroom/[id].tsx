@@ -54,7 +54,7 @@ const Chat = () => {
       //localStorageはstring型のみ
       localStorage.setItem("chatappUser_id", "22");
       const sendInformation = {
-        chatappUser_id: parseInt(localStorage.getItem("chatappUser_id")),
+        chatappUser_id: Number(JSON.parse(localStorage.getItem("myID"))),
         message: message,
       };
       axios
@@ -110,7 +110,7 @@ const Chat = () => {
             ) => {
               const isMine =
                 sendthing.sendername_id ==
-                Number(JSON.parse(localStorage.getItem("chatappUser_id")));
+                Number(JSON.parse(localStorage.getItem("myID")));
               if (index == 0) {
                 return (
                   <div key={index}>
