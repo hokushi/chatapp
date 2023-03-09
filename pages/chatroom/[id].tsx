@@ -19,7 +19,7 @@ const MessageComponent = ({ sendthing, isMine, setterfunc }) => {
         <div className="float-left mr-2">{sendthing.sendername_id}</div>
       )}
       <div
-        className={`rounded-t-md border-2 px-2 py-0 mt-1 text-base bg-gray-300 ${colorStyle} ${floatStyle}`}
+        className={`rounded-t-md border-2 px-2 py-0 mt-1 max-w-xs text-base bg-gray-300 ${colorStyle} ${floatStyle}`}
         onClick={() => setDeleteCheck(!deleteCheck)}
       >
         {sendthing.message.text}
