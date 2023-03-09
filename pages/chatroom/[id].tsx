@@ -50,9 +50,9 @@ const Chat = () => {
     if (!message) {
       return;
     } else {
-      //chatappUser_idを3にしているが特定したくないので後で変更する
+      //chatappUser_idを22にしているが特定したくないので後で変更する
       //localStorageはstring型のみ
-      localStorage.setItem("chatappUser_id", "3");
+      localStorage.setItem("chatappUser_id", "22");
       const sendInformation = {
         chatappUser_id: parseInt(localStorage.getItem("chatappUser_id")),
         message: message,
@@ -110,7 +110,7 @@ const Chat = () => {
             ) => {
               const isMine =
                 sendthing.sendername_id ==
-                Number(JSON.parse(localStorage.getItem("myID")));
+                Number(JSON.parse(localStorage.getItem("chatappUser_id")));
               if (index == 0) {
                 return (
                   <div key={index}>
