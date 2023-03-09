@@ -7,7 +7,7 @@ const Hoge = () => {
 
   useEffect(() => {
     console.log("routerとは", router);
-    console.log("idとは", id);
+    console.log("idの値は", id);
   }, []);
 
   return <div>hoge</div>;
