@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
-const basic2 = () => {
+const Basic3Page = () => {
   return (
     <>
       <h1>Linkタグについて</h1>
@@ -32,4 +31,4 @@ const basic2 = () => {
   );
 };
 
-export default basic2;
+export default Basic3Page;

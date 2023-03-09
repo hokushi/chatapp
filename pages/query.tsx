@@ -10,7 +10,7 @@ const Pass = () => {
 
   const querycheck = () => {
     console.log(router);
-    console.log(router.query.id);
+    console.log("router.query.idの値は", router.query.id);
   };
 
   const querycheck2 = () => {

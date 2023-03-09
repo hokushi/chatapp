@@ -7,7 +7,7 @@ const basic1 = () => {
 
   /* useEffectの基本 */
   useEffect(() => {
-    console.log("useEffectが実行されました");
+    console.log("変数booleanが変更されたので、useEffectが実行されました");
   }, [boolean]);
 
   return (

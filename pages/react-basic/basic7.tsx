@@ -1,58 +1,71 @@
-import React from "react";
-import { z } from "zod";
-import ZodBasicInput from "../../components/ZodBasicInput";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-const InputSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "メールアドレスは必須です。" })
-    .email({ message: "メールアドレスの形式が正しくありません。" }),
-});
+type InputType = {
+  username: string;
+  email: string;
+};
 
-type InputType = z.infer<typeof InputSchema>;
-
-const ReactBasic7 = () => {
+const basic6 = () => {
+  /** いったんこれは呪文とおぼえてもいいよ！ */
   const {
     register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<InputType>({ resolver: zodResolver(InputSchema) });
+    handleSubmit /* これでバリデーションをしている */,
+    formState: { errors },
+  } = useForm<InputType>();
 
-  const loginWithEmailAndPassword: SubmitHandler<InputType> = (data) => {
-    try {
-      console.log("成功");
-    } catch (e) {
-      console.log("失敗");
-    }
+  const sendProfile: SubmitHandler<InputType> = (data) => {
+    console.log(data.username);
+    console.log(data.email);
+    console.log(data);
   };
 
   return (
-    <>
-      <div className="mt-20 px-4">
-        <div className="text-3xl text-red-600">zodの使い方</div>
-        <form
-          className="space-y-2 mt-5"
-          onSubmit={handleSubmit(loginWithEmailAndPassword)}
-        >
-          <label htmlFor="email">"メールアドレス"</label>
+    <div>
+      <form onSubmit={handleSubmit(sendProfile)} className="mt-5">
+        <div>
+          <h1 className="ml-8 text-red-500 text-2xl">基本的な使い方</h1>
+          <p className="ml-8 mt-5">名前</p>
           <input
-            className="block w-full mb-2 mt-1 text-xl text-gray-900 border-gray-300 bg-gray-50 focus:ring-teal focus:border-teal dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
-            placeholder="pinoko@icloud.com"
-            id="email"
             type="text"
-            {...register("email")}
+            className="block w-10/12 p-2 pl-2 text-sm mx-8 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-gray-700 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+            placeholder="ほくし"
+            {...register("username", {
+              required: "※名前は必須です。",
+              maxLength: { value: 5, message: "※5文字以内でご記入ください" },
+            })}
+          />
+          {errors.username && (
+            <p className="ml-8 text-red-500">{errors.username.message}</p>
+          )}
+          <p className="ml-8 mt-5">メアド</p>
+          <input
+            type="text"
+            className="block w-10/12 p-2 pl-2 text-sm mx-8 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-gray-700 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+            placeholder="hokiu@icloud.com"
+            {...register("email", {
+              required: "※メアドは必須です。",
+              pattern: {
+                value:
+                  /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                message: "※メアドの形式が違います",
+              },
+            })}
           />
           {errors.email && (
-            <p className="text-red-400 p-2">{errors.email?.message}</p>
+            <p className="ml-8 text-red-500">{errors.email.message}</p>
           )}
-          <button>送信</button>
-        </form>
-      </div>
-    </>
+        </div>
+        <div className="grid grid-cols-11">
+          <button
+            type="submit"
+            className="bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 mt-8 border-b-4 border-gray-700 hover:border-gray-500 rounded col-start-3 col-end-10"
+          >
+            送信
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
-export default ReactBasic7;
+export default basic6;
