@@ -10,6 +10,11 @@ const basic1 = () => {
     console.log("変数booleanが変更されたので、useEffectが実行されました");
   }, [boolean]);
 
+  const check = () => {
+    setNumber(3);
+    console.log(number);
+  };
+
   return (
     <>
       <h1>useStateの基本</h1>
@@ -21,6 +26,8 @@ const basic1 = () => {
       <button className="bg-red-400" onClick={() => setBoolean(!boolean)}>
         booleanを反転
       </button>
+      <h1 className="mt-5">同期、非同期</h1>
+      <button onClick={check}>check</button>
     </>
   );
 };
