@@ -20,10 +20,10 @@ const Basic3Page = () => {
         <Link href="/register">普通のページ遷移</Link>
       </div>
       <div className="mt-5">
-        <Link href="/8478hhjhehi8y4983y">passページ遷移</Link>
+        <Link href="/1">passページ遷移</Link>
       </div>
       <div className="mt-5">
-        <Link href={{ pathname: "/query", query: { id: 1 } }}>
+        <Link href={{ pathname: "/hoge", query: { name: 1 } }}>
           queryページ遷移
         </Link>
       </div>

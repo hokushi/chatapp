@@ -15,6 +15,9 @@ const basic5 = () => {
     <>
       <Component />
       <Props css={"mt-5 bg-red-400"}>
+        <h1>k</h1>
+      </Props>
+      <Props css={"mt-5 bg-red-800"}>
         <h1>propsの使い方</h1>
         <p>propsは親から子に値を渡すことができる</p>
       </Props>
