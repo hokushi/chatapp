@@ -1,4 +1,12 @@
+import { useState } from "react";
+
 const TermsOfService = () => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   return (
     <div className="h-screen">
       <h1 className="text-3xl flex justify-center pt-10 font-bold">
@@ -62,13 +70,14 @@ const TermsOfService = () => {
         </p>
       </div>
       <div className="text-right mr-3 mt-1">
-        <input type="checkbox" />
+        <input type="checkbox" id="Checkbox" onChange={handleCheckboxChange} />
         <label>同意する</label>
       </div>
       <div className="flex justify-center mt-5">
         <button
           className="bg-gray-500 text-3xl flex justify-center w-3/5 font-bold p-2"
-          disabled
+          id="myButton"
+          disabled={!isChecked}
         >
           送信する
         </button>
