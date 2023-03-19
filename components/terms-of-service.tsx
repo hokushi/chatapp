@@ -75,11 +75,19 @@ const TermsOfService = () => {
       </div>
       <div className="flex justify-center mt-5">
         <button
-          className="bg-gray-500 text-3xl flex justify-center w-3/5 font-bold p-2"
+          className="bg-gray-400 text-3xl flex justify-center w-3/5 font-bold p-2"
           id="myButton"
           disabled={!isChecked}
         >
           送信する
+        </button>
+      </div>
+      <div className="flex justify-center mt-5">
+        <button
+          className="bg-gray-400 text-3xl flex justify-center w-3/5 font-bold p-2"
+          id="backButton"
+        >
+          戻る
         </button>
       </div>
     </div>
