@@ -1,18 +1,44 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TermsOfService = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [agree, setAgree] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
+  const termsAndConditionsRef = useRef(null);
+  const termsAndConditionsCheckboxRef = useRef(null);
+
+  useEffect(() => {
+    const termsAndConditions = termsAndConditionsRef.current;
+
+    const Scroll = () => {
+      const scrollTop = termsAndConditions.scrollTop; // scrollTop プロパティを使ってスクロール位置を取得する
+      setScrollPosition(scrollTop); // スクロール位置をステートに更新する
+    };
+
+    termsAndConditions.addEventListener("scroll", Scroll); // スクロールイベントにリスナーを追加する
+    console.log(scrollPosition);
+    if (
+      termsAndConditions.scrollHeight <
+      termsAndConditions.offsetHeight + scrollPosition
+    ) {
+      setAgree(true);
+    }
+  }, [scrollPosition]);
+
   return (
     <div className="h-screen">
-      <h1 className="text-3xl flex justify-center pt-10 font-bold">
+      <h1 className="text-3xl flex justify-center pt-10 font-bold mb-10">
         サービス利用規約
       </h1>
-      <div className="overflow-auto h-3/5 mt-10 mx-3 border-2 border-black">
+      <div
+        ref={termsAndConditionsRef}
+        className="overflow-auto h-3/5 mx-3 border-2 border-black"
+      >
         <h2>
           <b>プライバシーポリシー</b>
         </h2>
@@ -69,8 +95,13 @@ const TermsOfService = () => {
           ただし、インラインフレームの使用や画像の直リンクはご遠慮ください。
         </p>
       </div>
-      <div className="text-right mr-3 mt-1">
-        <input type="checkbox" id="Checkbox" onChange={handleCheckboxChange} />
+      <div id="terms-and-conditions-checkbox" className="text-right mr-3 mt-1">
+        <input
+          type="checkbox"
+          ref={termsAndConditionsCheckboxRef}
+          onChange={handleCheckboxChange}
+          disabled={!agree}
+        />
         <label>同意する</label>
       </div>
       <div className="flex justify-center mt-5">
